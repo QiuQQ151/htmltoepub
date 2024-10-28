@@ -72,7 +72,7 @@ unsigned char *read_jpeg(const char *filename, int *width, int *height) {
 }
 
 // 创建叠加文字的JPEG图像
-void overlay_text_on_image(const char *input_filename, const char *output_filename, const char *text) {
+void overlay_text_on_image(const char *input_filename, const char *output_filename, const char *text, int x,int y,int size) {
     int width, height;
     unsigned char *image_buffer = read_jpeg(input_filename, &width, &height);
     if (!image_buffer) {
@@ -95,11 +95,11 @@ void overlay_text_on_image(const char *input_filename, const char *output_filena
         return;
     }
 
-    FT_Set_Pixel_Sizes(face,80, 0); // 设置字体大小
+    FT_Set_Pixel_Sizes(face,size, 0); // 设置字体大小
 
     // 在图像上绘制文字
-    int x_offset = 350; // 文字的x偏移
-    int y_offset = 1300; // 文字的y偏移
+    int x_offset = x; // 文字的x偏移
+    int y_offset = y; // 文字的y偏移
 
     for (const char *p = text; *p != '\0';) {
         int unicode_char = get_next_utf8_char(&p); // 获取下一个 Unicode 字符

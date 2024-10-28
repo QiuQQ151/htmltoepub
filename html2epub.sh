@@ -57,8 +57,8 @@ zip -X0 "$epub_file" mimetype
 zip -rX9 "$epub_file" META-INF/ OEBPS/
 done
 
-largest_image=$(find "/root/project/html2epub/temp/nfrb/epub/OEBPS/images/" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.gif" \) -exec du -b {} + | sort -n | tail -n 1 | awk '{print $2}')
-cp "$largest_image" "/root/project/html2epub/temp/nfrb/epub/OEBPS/cover.jpg"
+# largest_image=$(find "/root/project/html2epub/temp/nfrb/epub/OEBPS/images/" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.gif" \) -exec du -b {} + | sort -n | tail -n 1 | awk '{print $2}')
+# cp "$largest_image" "/root/project/html2epub/temp/nfrb/epub/OEBPS/cover.jpg"
 for txt_file in /root/project/html2epub/temp/nfrb/*.txt; do
 filename=$(basename "$txt_file" .txt)  # 如 新华日报20241016
 epub_file="/root/project/html2epub/temp/nfrb/${filename}.epub"

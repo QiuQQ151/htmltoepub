@@ -91,6 +91,10 @@ void extract_nfrb(char* time, FILE *log)
     }
     // 4---释放资源
     fclose(output_file);
+
+    // 创建电子书封面
+    overlay_text_on_image("lib/cover.jpg","temp/nfrb/epub/OEBPS/cover.jpg" , "南方日报", 150, 250, 150);
+    overlay_text_on_image("temp/nfrb/epub/OEBPS/cover.jpg","temp/nfrb/epub/OEBPS/cover.jpg" , time, 150, 420, 150);
     epub("temp/nfrb/", txt_name , log);
 }
 

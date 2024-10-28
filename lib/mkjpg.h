@@ -5,5 +5,5 @@ int get_next_utf8_char(const char **p);
 unsigned char *read_jpeg(const char *filename, int *width, int *height);
 
 // 创建叠加文字的JPEG图像
-void overlay_text_on_image(const char *input_filename, const char *output_filename, const char *text);
+void overlay_text_on_image(const char *input_filename, const char *output_filename, const char *text, int x,int y,int size);
 
