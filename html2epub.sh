@@ -32,23 +32,23 @@ cd "/root/project/html2epub"
 
 # epub打包
 # 选择封面图片
-largest_image=$(find "/root/project/html2epub/temp/xhrb/epub/OEBPS/images/" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.gif" \) -exec du -b {} + | sort -n | tail -n 1 | awk '{print $2}')
-cp "$largest_image" "/root/project/html2epub/temp/xhrb/epub/OEBPS/cover.jpg"
-    # 特别的封面
-        # 定义目标日期
-        target_day=28
-        target_month=10
-        # 获取今天的日期和月份
-        today_day=$(date +%d)
-        today_month=$(date +%m)
-        # 检查今天是否是目标日期
-        if [ "$today_day" -eq "$target_day" ] && [ "$today_month" -eq "$target_month" ]; then
-            echo "今天是 ${target_month}月${target_day}日，执行特定命令。"
-            # 在这里执行你的特定命令
-            cp "/root/project/html2epub/lib/birthday.jpg" "/root/project/html2epub/temp/xhrb/epub/OEBPS/cover.jpg"
-        else
-            echo "今天不是 ${target_month}月${target_day}日。"
-        fi
+# largest_image=$(find "/root/project/html2epub/temp/xhrb/epub/OEBPS/images/" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.gif" \) -exec du -b {} + | sort -n | tail -n 1 | awk '{print $2}')
+# cp "$largest_image" "/root/project/html2epub/temp/xhrb/epub/OEBPS/cover.jpg"
+#     # 特别的封面
+#         # 定义目标日期
+#         target_day=28
+#         target_month=10
+#         # 获取今天的日期和月份
+#         today_day=$(date +%d)
+#         today_month=$(date +%m)
+#         # 检查今天是否是目标日期
+#         if [ "$today_day" -eq "$target_day" ] && [ "$today_month" -eq "$target_month" ]; then
+#             echo "今天是 ${target_month}月${target_day}日，执行特定命令。"
+#             # 在这里执行你的特定命令
+#             cp "/root/project/html2epub/lib/birthday.jpg" "/root/project/html2epub/temp/xhrb/epub/OEBPS/cover.jpg"
+#         else
+#             echo "今天不是 ${target_month}月${target_day}日。"
+#         fi
 for txt_file in /root/project/html2epub/temp/xhrb/*.txt; do
 filename=$(basename "$txt_file" .txt)  # 如 新华日报20241016
 epub_file="/root/project/html2epub/temp/xhrb/${filename}.epub"

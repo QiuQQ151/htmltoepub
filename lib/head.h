@@ -11,7 +11,7 @@
 // 工具
 #include "./extract.h"
 #include "./epub.h"
-
+#include "./mkjpg.h"
 // 用户
 #include "./xhrb.h"
 #include "./nfrb.h"

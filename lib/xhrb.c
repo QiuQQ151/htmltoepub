@@ -8,6 +8,7 @@ output_file: 输出文件操作符
 */
 void extract_xhrb(char* time, FILE *log)
 {  
+    
     // 转换日期
     char* date = time2date(time); 
 
@@ -75,7 +76,9 @@ void extract_xhrb(char* time, FILE *log)
     }
     // 释放资源
     fclose(output_file);
-
+     
+    // 创建电子书封面
+    overlay_text_on_image("lib/xhrbcover.jpg","temp/xhrb/epub/OEBPS" , time);
     epub("temp/xhrb/", txt_name , log);
 } 
 
