@@ -82,7 +82,8 @@ void extract_xhrb(char* time, FILE *log)
     char year[5] ;
     year[4] = '\0';
     html_fix(year,time,4);
-    overlay_text_on_image("lib/kedaya.jpg","temp/xhrb/epub/OEBPS/cover.jpg" , year, 85, 540, 100);
+    overlay_text_on_image("lib/kedaya.jpg","temp/xhrb/epub/OEBPS/cover.jpg" , "新华日报", 120, 100, 200);
+    overlay_text_on_image("temp/xhrb/epub/OEBPS/cover.jpg","temp/xhrb/epub/OEBPS/cover.jpg" , year, 85, 540, 100);
     overlay_text_on_image("temp/xhrb/epub/OEBPS/cover.jpg","temp/xhrb/epub/OEBPS/cover.jpg" , time+4, 85, 640, 100);
     epub("temp/xhrb/", txt_name , log);
 } 
