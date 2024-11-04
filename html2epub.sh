@@ -36,8 +36,8 @@ cd "/root/project/html2epub"
 # cp "$largest_image" "/root/project/html2epub/temp/xhrb/epub/OEBPS/cover.jpg"
 #     # 特别的封面
 #         # 定义目标日期
-#         target_day=28
-#         target_month=10
+#         target_day=
+#         target_month=
 #         # 获取今天的日期和月份
 #         today_day=$(date +%d)
 #         today_month=$(date +%m)
