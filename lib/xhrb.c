@@ -78,6 +78,7 @@ void extract_xhrb(char* time, FILE *log)
     fclose(output_file);
      
     // 创建电子书封面
+    printf("创建电子书封面\n");
     // overlay_text_on_image("lib/xhrbcover.jpg","temp/xhrb/epub/OEBPS/cover.jpg" , time, 300, 1200, 150);
     char year[5] ;
     year[4] = '\0';

@@ -15,7 +15,7 @@ mkdir temp/nfrb/epub/OEBPS
 mkdir temp/nfrb/epub/OEBPS/images
 cp lib/mimetype      temp/nfrb/epub/
 cp lib/container.xml temp/nfrb/epub/META-INF/
-cp lib/cover.jpg     temp/nfrb/epub/OEBPS/
+cp lib/cover.jpg     temp/nfrb/epub/OEBPS/cover.jpg 
 
 mkdir temp/xhrb
 mkdir temp/xhrb/epub
@@ -24,7 +24,7 @@ mkdir temp/xhrb/epub/OEBPS
 mkdir temp/xhrb/epub/OEBPS/images
 cp lib/mimetype      temp/xhrb/epub/
 cp lib/container.xml temp/xhrb/epub/META-INF/
-cp lib/cover.jpg     temp/xhrb/epub/OEBPS/
+cp lib/kedaya.jpg     temp/xhrb/epub/OEBPS/cover.jpg 
 
 # 执行抓取与epub制作程序
 DIR=/home/qqq
