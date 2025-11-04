@@ -58,37 +58,49 @@ void extract_nfrb(char* time, FILE *log)
     char* jpg_location = "temp/nfrb/epub/OEBPS/images/";
 
     int count = 1; // 实际的文章标号
-    int i = 150;
+    int i = 120;
+    fprintf(stderr, "[");
     while( i-- )
     {
         html = makeup_article_html(date, num2char(num), "https://epaper.nfnews.com/nfdaily/html/", "/content_", ".html", log);
-        printf("文章地址：%s\n",html);
+        //printf("文章地址：%s\n",html);
         // 提取内容
-        extract_article( html, &count, jpg_start_html ,
-                        jpg_tag,  jpg_tag_left,  jpg_tag_right,
-                        title_tag,  title_tag_left, title_tag_right,
-                        content_tag,  content_tag_left, content_tag_right,
-                        secion_left,  section_right,
-                        jpg_location,  output_file,  log
-                        );
+        int ret = extract_article( html, &count, jpg_start_html ,
+                                    jpg_tag,  jpg_tag_left,  jpg_tag_right,
+                                    title_tag,  title_tag_left, title_tag_right,
+                                    content_tag,  content_tag_left, content_tag_right,
+                                    secion_left,  section_right,
+                                    jpg_location,  output_file,  log
+                                    );
+        if( ret == 1 ){
+            fprintf(stderr, "x");
+        } else{
+             fprintf(stderr, "*");
+        } 
         num--;
     }
-    i = 150;
+    i = 20;
     num = atoi( article_num) + 1;
     while( i-- )
     {
         html = makeup_article_html(date, num2char(num), "https://epaper.nfnews.com/nfdaily/html/", "/content_", ".html", log);
-        printf("文章地址：%s\n",html);
+        //printf("文章地址：%s\n",html);
         // 提取内容
-        extract_article( html, &count, jpg_start_html ,
-                        jpg_tag,  jpg_tag_left,  jpg_tag_right,
-                        title_tag,  title_tag_left, title_tag_right,
-                        content_tag,  content_tag_left, content_tag_right,
-                        secion_left,  section_right,
-                        jpg_location,  output_file,  log
-                        );
+        int ret = extract_article( html, &count, jpg_start_html ,
+                                    jpg_tag,  jpg_tag_left,  jpg_tag_right,
+                                    title_tag,  title_tag_left, title_tag_right,
+                                    content_tag,  content_tag_left, content_tag_right,
+                                    secion_left,  section_right,
+                                    jpg_location,  output_file,  log
+                                    );
+        if( ret == 1 ){
+             fprintf(stderr, "x");
+        } else{
+             fprintf(stderr, "*");
+        } 
         num++;
     }
+    printf("]\n");
     // 4---释放资源
     fclose(output_file);
 

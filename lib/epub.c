@@ -347,8 +347,10 @@ struct Article * buil_article_list(char* txt_content )
     
     // 开始建立链表
     int i = 1;
+    fprintf(stderr, "[");
     while( 1 )
     {  
+       fprintf(stderr, "*");
        // 更新jpg右侧地址
        jpg_right = strstr(jpg_left,">"); 
         if( jpg_right == NULL ){
@@ -414,7 +416,7 @@ struct Article * buil_article_list(char* txt_content )
        now->jpg[0] = '\0';   // 还有没有别的办法？
        *(jpg_right) = '\0'; //修改方便字符串复制
        strcat(now->jpg, jpg_left );
-       printf("图片:%s",now->jpg);
+       //printf("图片:%s",now->jpg);
 
        // 写入文章标号
        article_num = num2char( i++ );
@@ -429,7 +431,7 @@ struct Article * buil_article_list(char* txt_content )
        }
        now->num[0] = '\0';
        strcat(now->num, article_num);
-       printf("文章标号:%s\n",now->num);
+       //printf("文章标号:%s\n",now->num);
 
        // 写入标题信息  //注意强制改为'\0'会导致的提前结束问题
        now->title = (char*)malloc( sizeof(char)*(tiltle_right - tiltle_left +1) );
@@ -466,11 +468,12 @@ struct Article * buil_article_list(char* txt_content )
         jpg_left = strstr(content_right + 3,"<图片:"); // 注意跳过'\0' 
         if( jpg_left == NULL ){
             // 已无新的内容
+            fprintf(stderr, "]\n");
             printf("链表创建结束\n");
             return head ;  // 结束返回
         }   
         jpg_left += sizeof("<图片:") - 1; //跳过标签
-
+    
         // 建立新节点
         next = (struct Article*)malloc( sizeof( struct Article ) );
         next->next = NULL;
@@ -478,6 +481,7 @@ struct Article * buil_article_list(char* txt_content )
         pass = now;  // 记录上一个节点
         now = next;   // 切换
     }
+   
 }
 
 /*
@@ -489,9 +493,11 @@ void free_article_list( struct Article* head )
    struct Article* next = now->next;
    printf("开始释放链表\n");
    int i=0;
+    fprintf(stderr, "[");
    while( 1 )
    {
-        printf("释放节点%d\n",i++);
+        //printf("释放节点%d\n",i++);
+        fprintf(stderr, "*");
         // 记录下个节点地址
         next = now->next; 
         // 释放当前节点资源
@@ -502,6 +508,7 @@ void free_article_list( struct Article* head )
         free(now);
         now = next; // 切换到下一个节点操作
         if( now == NULL ){
+             fprintf(stderr, "]\n");
             printf("链表释放结束\n");
             return;
         }

@@ -156,7 +156,7 @@ char* extract_html_data(char* html, FILE* log)
     res = curl_easy_perform(curl);
     if ( res != CURLE_OK ) {
         log_record("HTTP请求失败，错误返回\n",log);
-        fprintf(stderr, "请求失败: %s\n", curl_easy_strerror(res));
+        //fprintf(stderr, "请求失败: %s\n", curl_easy_strerror(res));
         // 释放内存
         curl_easy_cleanup(curl);
         free(chunk.data);
@@ -192,10 +192,10 @@ void  extract_html_printf(char* html, FILE* log)
   char* data = extract_html_data( html, log);
   if( data == NULL ){
     // 异常
-    printf("网页内容为空，网址无效？\n");
+    //printf("网页内容为空，网址无效？\n");
     return ;
   }
-  printf("网页内容为：\n%s\n",data);
+  //printf("网页内容为：\n%s\n",data);
   
   free(data);
   return ;
@@ -306,7 +306,7 @@ int extract_jpg( char* data, int* count,
    *jpg_html = '\0';
    strcat(jpg_html,jpg_start_html);
    strcat(jpg_html,jpg_end_html);
-   printf("图片下载地址合成：\n%s\n",jpg_html);
+   //printf("图片下载地址合成：\n%s\n",jpg_html);
 
    // 合成图片存储路径
    char* num = num2char(*count);
@@ -409,21 +409,21 @@ char* extract_concrete_content( char* data,  char* start_tag, char* concrete_sta
     char *start = strstr(data, start_tag); 
     if( start == NULL ){
         log_record("大范围定位失败\n",log);
-        printf("大范围定位失败\n");
+        //printf("大范围定位失败\n");
         return NULL;
     }
     // 第二步：小范围定位
     char *concrete_start = strstr(start, concrete_start_tag);
     if( concrete_start == NULL ){
         log_record("小范围左定位失败\n",log);
-        printf("小范围左定位失败\n");
+        //printf("小范围左定位失败\n");
         return NULL;
     }
     concrete_start += strlen(concrete_start_tag); //跳过标签     
     char* concrete_end = strstr(concrete_start, concrete_end_tag); 
     if( concrete_end == NULL ){
         log_record("小范围右定位失败\n",log);
-        printf("小范围右定位失败\n");
+        //printf("小范围右定位失败\n");
         return NULL;
     }
     log_record("内容定位完成\n",log);
@@ -506,7 +506,7 @@ void download_image(char *url, char *filename)
     if (curl) {
         fp = fopen(filename, "wb");
         if (fp == NULL) {
-            fprintf(stderr, "无法打开文件 %s\n", filename);
+            //fprintf(stderr, "无法打开文件 %s\n", filename);
             return;
         }
 
@@ -517,7 +517,7 @@ void download_image(char *url, char *filename)
         
         res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
-            fprintf(stderr, "下载图片失败: %s\n", curl_easy_strerror(res));
+            //fprintf(stderr, "下载图片失败: %s\n", curl_easy_strerror(res));
         }
 
         fclose(fp);

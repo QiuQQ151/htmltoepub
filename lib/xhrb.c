@@ -36,7 +36,7 @@ void extract_xhrb(char* time, FILE *log)
     char* basic_html_end = "/node_1.html";
     char* article_num = get_article_firstnum( basic_html_first,basic_html_end, date, log);
     int num = atoi( article_num); // 转换为整数形式
-    printf("提取到的nfrb文章标号%s\n",article_num);
+    printf("提取到的xhrb文章标号%s\n[",article_num);
     
     // 提取新闻内容
     char* html; 
@@ -58,22 +58,29 @@ void extract_xhrb(char* time, FILE *log)
     char* jpg_location = "temp/xhrb/epub/OEBPS/images/";
 
     int count = 1; // 实际的文章标号
-    int i = 150;
+    int i = 80;
+    fprintf(stderr, "[");
     while( i-- )
     {   
         // 文章地址合成 例子：https://xh.xhby.net/pc/con/202410/25/content_1382411.html
         html = makeup_article_html(date, num2char(num), "https://xh.xhby.net/pc/con/", "/content_", ".html", log);
-        printf("文章地址：%s\n",html);
+        //printf("文章地址：%s\n",html);
         // 提取内容
-        extract_article( html, &count, jpg_start_html ,
-                        jpg_tag,  jpg_tag_left,  jpg_tag_right,
-                        title_tag,  title_tag_left, title_tag_right,
-                        content_tag,  content_tag_left, content_tag_right,
-                        secion_left,  section_right,
-                        jpg_location,  output_file,  log
-                        );
+        int ret = extract_article( html, &count, jpg_start_html ,
+                                    jpg_tag,  jpg_tag_left,  jpg_tag_right,
+                                    title_tag,  title_tag_left, title_tag_right,
+                                    content_tag,  content_tag_left, content_tag_right,
+                                    secion_left,  section_right,
+                                    jpg_location,  output_file,  log
+                                    );
+        if( ret == 1 ){
+             fprintf(stderr, "x");
+        } else{
+             fprintf(stderr, "*");
+        } 
         num++;
     }
+    printf("]\n");
     // 释放资源
     fclose(output_file);
      
