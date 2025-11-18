@@ -35,8 +35,15 @@ void extract_nfrb(char* time, FILE *log)
     char* basic_html_first = "https://epaper.nfnews.com/nfdaily/html/";
     char* basic_html_end = "/node_A01.html";
     char* article_num = get_article_firstnum( basic_html_first,basic_html_end, date, log);
-    int num = atoi( article_num); // 转换为整数形式
-    printf("提取到的nfrb文章标号%s\n",article_num);
+    int num = 0;
+    if( article_num == NULL){
+        printf("未能提取到南方日报文章标号\n");
+        return;
+    } else{
+        num = atoi( article_num); // 转换为整数形式
+        printf("提取到的nfrb文章标号%s\n",article_num);        
+    }
+
     
     // 提取新闻内容
     char* html; //  "https://epaper.nfnews.com/nfdaily/html/202410/24/content_10115761.html";
