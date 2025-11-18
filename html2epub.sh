@@ -1,12 +1,11 @@
 # 脚本
 
 # 历史文件保留与文件夹重建
-mv temp/nfrb/*.txt  history/
-mv temp/nfrb/*.epub history/
-mv temp/xhrb/*.txt  history/
-mv temp/xhrb/*.epub history/
-rm -r temp
-mkdir temp
+mkdir -p history && mv temp/nfrb/*.txt  history/
+mkdir -p history && mv temp/nfrb/*.epub history/
+mkdir -p history && mv temp/xhrb/*.txt  history/
+mkdir -p history && mv temp/xhrb/*.epub history/
+rm -r temp && mkdir temp
 
 mkdir temp/nfrb
 mkdir temp/nfrb/epub
