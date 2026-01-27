@@ -89,7 +89,7 @@ void overlay_text_on_image(const char *input_filename, const char *output_filena
 
     FT_Face face;
     if (FT_New_Face(ft, "/usr/share/fonts/truetype/wqy/wqy-microhei.ttc", 0, &face)) {
-        fprintf(stderr, "无法加载字体\n");
+        fprintf(stderr, "无法加载字体：/usr/share/fonts/truetype/wqy/wqy-microhei.ttc\n");
         free(image_buffer);
         FT_Done_FreeType(ft);
         return;

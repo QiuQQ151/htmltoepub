@@ -49,21 +49,63 @@ DIR=$(pwd)
 #         else
 #             echo "今天不是 ${target_month}月${target_day}日。"
 #         fi
-for txt_file in $DIR/temp/xhrb/*.txt; do
-filename=$(basename "$txt_file" .txt)  # 如 新华日报20241016
-epub_file="$DIR/temp/xhrb/${filename}.epub"
-cd "$DIR/temp/xhrb/epub/"
-zip -X0 "$epub_file" mimetype
-zip -rX9 "$epub_file" META-INF/ OEBPS/
-done
+# for txt_file in $DIR/temp/xhrb/*.txt; do
+# filename=$(basename "$txt_file" .txt)  # 如 新华日报20241016
+# epub_file="$DIR/temp/xhrb/${filename}.epub"
+# cd "$DIR/temp/xhrb/epub/"
+# zip -X0 "$epub_file" mimetype
+# zip -rX9 "$epub_file" META-INF/ OEBPS/
+# done
 
-for txt_file in $DIR/temp/nfrb/*.txt; do
-filename=$(basename "$txt_file" .txt)  # 如 新华日报20241016
-epub_file="$DIR/temp/nfrb/${filename}.epub"
-cd "$DIR/temp/nfrb/epub/"
-zip -X0 "$epub_file" mimetype
-zip -rX9 "$epub_file" META-INF/ OEBPS/
-done
+# for txt_file in $DIR/temp/nfrb/*.txt; do
+# filename=$(basename "$txt_file" .txt)  # 如 新华日报20241016
+# epub_file="$DIR/temp/nfrb/${filename}.epub"
+# cd "$DIR/temp/nfrb/epub/"
+# zip -X0 "$epub_file" mimetype
+# zip -rX9 "$epub_file" META-INF/ OEBPS/
+# done
 
+# 进度条函数
+show_progress() {
+    local total=$1
+    local current=$2
+    local file=$3
+    local percent=$((current * 100 / total))
+    printf "\r正在处理: %s [%-50s] %d%% (%d/%d)" "$file" $(printf "#%.0s" $(seq 1 $((percent/2)))) $percent $current $total
+}
+
+# 处理新华日报
+count=0
+files=($DIR/temp/xhrb/*.txt)
+total=${#files[@]}
+for txt_file in "${files[@]}"; do
+    ((count++))
+    filename=$(basename "$txt_file" .txt)
+    epub_file="$DIR/temp/xhrb/${filename}.epub"
+    cd "$DIR/temp/xhrb/epub/"
+    # 显示进度
+    show_progress $total $count "$filename.epub"
+    # 静默压缩
+    zip -q -X0 "$epub_file" mimetype
+    zip -q -rX9 "$epub_file" META-INF/ OEBPS/
+done
+echo -e "\n新华日报处理完成"
+
+# 处理南方日报
+count=0
+files=($DIR/temp/nfrb/*.txt)
+total=${#files[@]}
+for txt_file in "${files[@]}"; do
+    ((count++))
+    filename=$(basename "$txt_file" .txt)
+    epub_file="$DIR/temp/nfrb/${filename}.epub"
+    cd "$DIR/temp/nfrb/epub/"
+    # 显示进度
+    show_progress $total $count "$filename.epub"
+    # 静默压缩
+    zip -q -X0 "$epub_file" mimetype
+    zip -q -rX9 "$epub_file" META-INF/ OEBPS/
+done
+echo -e "\n南方日报处理完成"
 
 
