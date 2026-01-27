@@ -26,7 +26,7 @@ cp lib/container.xml temp/xhrb/epub/META-INF/
 cp lib/kedaya.jpg     temp/xhrb/epub/OEBPS/cover.jpg 
 
 # 执行抓取与epub制作程序
-DIR=/home/qqq
+DIR=$(pwd)
 cd "$DIR/html2epub"
 ./html2epub.exe
 
