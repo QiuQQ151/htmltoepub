@@ -24,6 +24,12 @@ void extract_nfrb(char* time, FILE *log)
     if(output_file == NULL ){
         // 创建文件失败
         printf("NFRB创建失败%s\n",txt_name);
+        printf("temp/nfrb/文件夹或不存在，准备创建文件夹\n");
+        // 在创建文件，修在错误
+        char cmd[256];
+        snprintf(cmd, sizeof(cmd), "mkdir -p temp/nfrb");
+        system(cmd);   
+        printf("已创建temp/nfrb/文件夹，请重新运行程序\n");     
         return;
     }
    fputs("每日新闻\n",output_file);
