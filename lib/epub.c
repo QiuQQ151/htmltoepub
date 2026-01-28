@@ -37,6 +37,10 @@ int epub(char* home_location, char* txtname, FILE* log)
 int content_opf_create( struct Article* head, char* home_location, FILE* log )
 {    
     char* location = (char*)malloc( sizeof(char)*( strlen(home_location) + strlen("epub/OEBPS/content.opf") + 1 ) );
+    if (location == NULL) {
+        printf("内存分配失败\n");
+        return 1;
+    }
     *location = '\0';
     strcat( location,home_location);
     strcat(location,"epub/OEBPS/content.opf");
@@ -45,6 +49,7 @@ int content_opf_create( struct Article* head, char* home_location, FILE* log )
     content_opf_fp = fopen(location,"w"); //写入模式打开
     if( content_opf_fp == NULL ){
         printf("无法打开content,opf\n");
+        free(location);
         return 1;
     }
 
@@ -109,6 +114,7 @@ int content_opf_create( struct Article* head, char* home_location, FILE* log )
     fputs("</package>\n",content_opf_fp);
 
     fclose(content_opf_fp);
+    free(location);
     return 0;
 }
 
@@ -118,6 +124,10 @@ int content_opf_create( struct Article* head, char* home_location, FILE* log )
 int toc_ncx_create( struct Article* head, char* home_location, FILE* log  )
 {
     char* location = (char*)malloc( sizeof(char)*( strlen(home_location) + strlen("epub/OEBPS/toc.ncx") + 1 ) );
+    if (location == NULL) {
+        printf("内存分配失败\n");
+        return 1;
+    }
     *location = '\0';
     strcat( location,home_location);
     strcat(location,"epub/OEBPS/toc.ncx");
@@ -126,6 +136,7 @@ int toc_ncx_create( struct Article* head, char* home_location, FILE* log  )
     toc_ncx_fp = fopen(location,"w"); //写入模式打开
     if( toc_ncx_fp == NULL ){
         printf("无法打开toc.ncx\n");
+        free(location);
         return 1;
     }
     // 写入基本前缀
@@ -169,12 +180,14 @@ int toc_ncx_create( struct Article* head, char* home_location, FILE* log  )
 
         fputs("</navPoint>\n",toc_ncx_fp);
 
+        free(num_Order); // 释放 num2char 分配的内存
         next = now->next;
         now = next;
     }
     fputs("</navMap>\n",toc_ncx_fp);
     fputs("</ncx>\n",toc_ncx_fp);
     fclose(toc_ncx_fp);
+    free(location);
 }
 
 /*
@@ -189,6 +202,10 @@ int chapter_create( struct Article* head, char* home_location, FILE* log )
     while( now->next != NULL )
     {
         char* location = (char*)malloc( sizeof(char)*( strlen(home_location) + strlen("epub/OEBPS/chapter") + 1 ) );
+        if (location == NULL) {
+            printf("内存分配失败\n");
+            return 1;
+        }
         *location = '\0';
         strcat( location,home_location);
         strcat(location,"epub/OEBPS/chapter");
@@ -197,6 +214,7 @@ int chapter_create( struct Article* head, char* home_location, FILE* log )
         char* chapterx = (char*)malloc( sizeof(char)*( strlen(location) + strlen(now->num) + 5 + 1));
         if( chapterx == NULL ){
             printf("无法分配chapterx内存\n");
+            free(location);
             return 1;
         }  
         *chapterx = '\0';
@@ -206,6 +224,8 @@ int chapter_create( struct Article* head, char* home_location, FILE* log )
         chapter_html_fp = fopen(chapterx,"w"); //写入模式打开
         if( chapter_html_fp == NULL ){
             printf("无法打开chapterx.html\n");
+            free(location);
+            free(chapterx);
             return 1;
         }       
         
@@ -256,6 +276,8 @@ int chapter_create( struct Article* head, char* home_location, FILE* log )
 
         // 释放资源
         fclose(chapter_html_fp);
+        free(location);
+        free(chapterx);
 
         next = now->next;
         now = next; 
@@ -271,6 +293,10 @@ int index_create( struct Article* head, char* home_location, FILE* log )
 {
     FILE* index_fp;
     char* location = (char*)malloc( sizeof(char)*( strlen(home_location) + strlen("epub/OEBPS/index.html") + 1 ) );
+    if (location == NULL) {
+        printf("内存分配失败\n");
+        return 1;
+    }
     *location = '\0';
     strcat( location,home_location);
     strcat(location,"epub/OEBPS/index.html");
@@ -278,6 +304,7 @@ int index_create( struct Article* head, char* home_location, FILE* log )
     index_fp = fopen(location,"w"); //写入模式打开
     if( index_fp == NULL ){
         printf("无法打开index.html\n");
+        free(location);
         return 1;
     }
     // 写入基本前缀
@@ -307,6 +334,7 @@ int index_create( struct Article* head, char* home_location, FILE* log )
     fputs("</body>\n",index_fp);
     fputs("</html>\n",index_fp);
     fclose(index_fp);
+    free(location);
 }
 
 /*
@@ -420,17 +448,19 @@ struct Article * buil_article_list(char* txt_content )
 
        // 写入文章标号
        article_num = num2char( i++ );
-       now->num = (char*)malloc( sizeof(char)*( sizeof(article_num ) + 1 ) );
+       now->num = (char*)malloc( sizeof(char)*( strlen(article_num) + 1 ) );
        if( now->num == NULL ){
             // 撤销当前节点
             pass->next = NULL; // 切断连接
             now = pass;
             free(next); // 释放资源
+            free(article_num); // 释放 num2char 分配的内存
             printf("内存分配失败，链表创建结束\n");
             return NULL ;  // 错误返回
        }
        now->num[0] = '\0';
        strcat(now->num, article_num);
+       free(article_num); // 释放 num2char 分配的内存
        //printf("文章标号:%s\n",now->num);
 
        // 写入标题信息  //注意强制改为'\0'会导致的提前结束问题
